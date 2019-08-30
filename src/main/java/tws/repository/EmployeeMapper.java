@@ -14,9 +14,10 @@ public interface EmployeeMapper {
    
 
 	Employee selectOne(@Param("id") String id) ;
+	
 
 	List<Employee> selectAll();
-
+	List<Employee> selectAllName(@Param("keyWord") String keyWord);
 	
 	void insert(@Param("employee")Employee employee );
 

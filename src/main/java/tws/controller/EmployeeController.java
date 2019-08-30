@@ -31,8 +31,19 @@ public class EmployeeController {
 	private EmployeeMapper employeeMapper;
 
 	@GetMapping("")
-	public ResponseEntity<List<Employee>> getAll() {
-		return ResponseEntity.ok(employeeMapper.selectAll());
+	public ResponseEntity<List<Employee>> getAll(@RequestParam(required = false) int page,
+			@RequestParam(required = false) int pageSize) {
+		EmployService employSizeServic = new EmployService();
+		return ResponseEntity.ok(employSizeServic.getPage(page, pageSize));
+	}
+
+	@GetMapping("/{name}")
+	public ResponseEntity<List<Employee>> getAllName(@PathVariable String name) {
+
+		EmployService employNameServic = new EmployService();
+		/* employNameServic.selectAll(name); */
+
+		return ResponseEntity.ok(employNameServic.selectAllName(name));
 	}
 
 	@PostMapping("")
@@ -43,30 +54,28 @@ public class EmployeeController {
 		return ResponseEntity.created(URI.create("/employees" + id)).build();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Employee> getOne(@PathVariable String id) {
-		Employee employee=employeeMapper.selectOne(id);
-		
-		return ResponseEntity.ok(employee);
-	}
+	/*
+	 * @GetMapping("/{id}") public ResponseEntity<Employee> getOne(@PathVariable
+	 * String id) { Employee employee=employeeMapper.selectOne(id);
+	 * 
+	 * return ResponseEntity.ok(employee); }
+	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<Employee> updateOne(@PathVariable String id,@RequestBody Employee employee) {
-		employeeMapper.updateOne(id,employee);
+	public ResponseEntity<Employee> updateOne(@PathVariable String id, @RequestBody Employee employee) {
+		employeeMapper.updateOne(id, employee);
 		return ResponseEntity.ok(employee);
 	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Employee> deleteOne(@PathVariable String id) {
 		employeeMapper.deleteOne(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeDTO> getdescService(@PathVariable String id) {
-		EmployService employServic=new EmployService();
-		EmployeeDTO employees=  employServic.getdesc(id);
-		
-		
+		EmployService employServic = new EmployService();
+		EmployeeDTO employees = employServic.getdesc(id);
 		return ResponseEntity.ok(employees);
 	}
 

@@ -5,6 +5,13 @@
         select * from `employee`;
     </select >
     
+	<select id="selectAllName" resultType="tws.entity.Employee">
+		select * from `employee`
+		<if test="keyWord !=null">
+			<bind name="pattern" value="`%`+keyWord+`%`" />
+			where `name` like #{pattern}
+		</if>
+	</select>
         <select id="selectOne" resultType="tws.entity.Employee">
         select * from `employee` where id=#{id};
     </select >
