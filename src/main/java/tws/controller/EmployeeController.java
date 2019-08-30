@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import tws.Service.EmployService;
 import tws.entity.Employee;
+import tws.entity.EmployeeDTO;
 import tws.repository.EmployeeMapper;
 
 import java.net.URI;
@@ -55,6 +58,16 @@ public class EmployeeController {
 	public ResponseEntity<Employee> deleteOne(@PathVariable String id) {
 		employeeMapper.deleteOne(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<EmployeeDTO> getdescService(@PathVariable String id) {
+		EmployService employServic=new EmployService();
+		EmployeeDTO employees=  employServic.getdesc(id);
+		
+		
+		return ResponseEntity.ok(employees);
 	}
 
 }
